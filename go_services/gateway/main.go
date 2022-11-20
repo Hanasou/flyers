@@ -11,6 +11,7 @@ func main() {
 	fmt.Println("Hello from Gateway")
 
 	utils.HelloFromUtils()
+	utils.NewHelloFromUtils()
 
 	shutdown.WaitForInterrupt()
 }

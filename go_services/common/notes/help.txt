@@ -1,0 +1,4 @@
+I'll just be jotting down a few useful notes on using this package for my services
+
+- Add "require github.com/Hanasou/flyers/go_services/common" into the go.mod file for each service you want to import this into
+- Use "go get github.com/Hanasou/flyers/go_services/common/package_name" if the library is outdated and you need to fetch a new package

@@ -47,8 +47,8 @@ func populateStore(db *Db) {
 	for i := 0; i < 10; i++ {
 		newPerson := person{
 			id:       i,
-			name:     names[rand.Intn(3)],
-			eyeColor: eyeColors[rand.Intn(3)],
+			name:     names[rand.Intn(len(names))],
+			eyeColor: eyeColors[rand.Intn(len(eyeColors))],
 		}
 		UpsertElement(db, strconv.Itoa(i), newPerson)
 	}

@@ -2,3 +2,5 @@ github.com/Hanasou/flyers/go_services/common v0.0.0-20221120004147-3346885d467e 
 github.com/Hanasou/flyers/go_services/common v0.0.0-20221120004147-3346885d467e/go.mod h1:uI3nNYY2bgYptnL/GyP0N9k7tjJ97kYRYTcWtmZQLwc=
 github.com/Hanasou/flyers/go_services/common v0.0.0-20221120010643-119d3a97caea h1:yQ/EBoMv1OSIWC29FQN69tHdWjo4it5emCxsR55YGM8=
 github.com/Hanasou/flyers/go_services/common v0.0.0-20221120010643-119d3a97caea/go.mod h1:uI3nNYY2bgYptnL/GyP0N9k7tjJ97kYRYTcWtmZQLwc=
+github.com/Hanasou/flyers/go_services/common v0.0.0-20221120011156-40ea6b64a311 h1:qvZ1z6iEtz6FXWkJW0niV0+BqqDR3A8eCV0PWNRlq78=
+github.com/Hanasou/flyers/go_services/common v0.0.0-20221120011156-40ea6b64a311/go.mod h1:uI3nNYY2bgYptnL/GyP0N9k7tjJ97kYRYTcWtmZQLwc=

@@ -2,3 +2,4 @@ I'll just be jotting down a few useful notes on using this package for my servic
 
 - Add "require github.com/Hanasou/flyers/go_services/common" into the go.mod file for each service you want to import this into
 - Use "go get github.com/Hanasou/flyers/go_services/common/package_name" if the library is outdated and you need to fetch a new package
+- Updating packages is extremely troublesome, I still don't exactly know why or why it doesn't work, I think it could just be really slow at picking up changes sometimes

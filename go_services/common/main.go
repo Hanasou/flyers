@@ -4,9 +4,10 @@ import (
 	"fmt"
 
 	"github.com/Hanasou/flyers/go_services/common/memdb"
+	"github.com/Hanasou/flyers/go_services/common/shutdown"
 )
 
 func main() {
 	fmt.Println(memdb.NewKv().Store)
-	memdb.Hello()
+	shutdown.WaitForInterrupt()
 }

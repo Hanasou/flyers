@@ -1,8 +1,8 @@
 package memdb
 
 import (
-	"math/rand"
-	"strconv"
+	"github.com/Hanasou/flyers/go_services/common/graph/model"
+	"github.com/Hanasou/flyers/go_services/common/utils"
 )
 
 // This will be an in-memory key value store that holds some data
@@ -16,13 +16,25 @@ type Db struct {
 	Store map[string]Entry
 }
 
-func NewKv() *Db {
-	newStore := &Db{
-		map[string]Entry{},
+type TodoDb struct {
+	Store map[string]*model.Todo
+}
+
+type UserDb struct {
+	Store map[string]*model.User
+}
+
+func NewUserStore() *UserDb {
+	newStore := &UserDb{
+		map[string]*model.User{},
 	}
+	return newStore
+}
 
-	populateStore(newStore)
-
+func NewTodoStore() *TodoDb {
+	newStore := &TodoDb{
+		map[string]*model.Todo{},
+	}
 	return newStore
 }
 
@@ -32,24 +44,59 @@ func UpsertElement(db *Db, key string, data any) {
 	}
 }
 
-func populateStore(db *Db) {
-	names := []string{
-		"Bill", "Bob", "Jack", "Jill",
+func UpsertTodoElement(db *TodoDb, key string, todo *model.Todo) {
+	db.Store[key] = todo
+}
+
+func UpsertUserElement(db *UserDb, key string, user *model.User) {
+	db.Store[key] = user
+}
+
+func PopulateUserStore(db *UserDb) {
+	// Generate users
+	nUsers := 5
+	userIds := []string{}
+	userNames := []string{"Bob", "James", "Eric", "Todd", "Howard"}
+	for i := 0; i < nUsers; i++ {
+		userIds = append(userIds, utils.GenerateId(16))
 	}
-	eyeColors := []string{
-		"Black", "Blue", "Brown", "Green",
-	}
-	type person struct {
-		id       int
-		name     string
-		eyeColor string
-	}
-	for i := 0; i < 10; i++ {
-		newPerson := person{
-			id:       i,
-			name:     names[rand.Intn(len(names))],
-			eyeColor: eyeColors[rand.Intn(len(eyeColors))],
+
+	for i := 0; i < nUsers; i++ {
+		// New user
+		newUser := &model.User{
+			ID:   userIds[i],
+			Name: userNames[i],
 		}
-		UpsertElement(db, strconv.Itoa(i), newPerson)
+		UpsertUserElement(db, newUser.ID, newUser)
+	}
+}
+
+func PopulateToDoStore(todoDb *TodoDb, userDb *UserDb) {
+
+	// Let's just spray the users into a slice for now
+	usersList := []*model.User{}
+	for _, v := range userDb.Store {
+		usersList = append(usersList, v)
+	}
+
+	// Generate todo objects
+	nToDo := 10
+	toDoIds := []string{}
+	for i := 0; i < nToDo; i++ {
+		toDoIds = append(toDoIds, utils.GenerateId(16))
+	}
+	toDoText := []string{}
+	for i := 0; i < nToDo; i++ {
+		toDoText = append(toDoText, utils.GenerateId(32))
+	}
+
+	for i := 0; i < nToDo; i++ {
+		newTodo := &model.Todo{
+			ID:   toDoIds[i],
+			Text: toDoText[i],
+			Done: utils.GenerateNumber(1, 2) == 1,
+			User: usersList[utils.GenerateNumber(1, 5)],
+		}
+		UpsertTodoElement(todoDb, newTodo.ID, newTodo)
 	}
 }

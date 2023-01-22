@@ -8,6 +8,6 @@ import (
 )
 
 func main() {
-	fmt.Println(memdb.NewKv().Store)
+	fmt.Println(memdb.NewTodoStore().Store)
 	shutdown.WaitForInterrupt()
 }

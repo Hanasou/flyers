@@ -18,10 +18,6 @@ type table struct {
 	rows   map[string]*row
 }
 
-type schema interface {
-	ToString() string
-}
-
 type row struct {
 	data []byte
 }
@@ -32,7 +28,7 @@ func CreateDatabase() *database {
 	}
 }
 
-func CreateTable(schema schema) *table {
+func CreateTable(schema interface{}) *table {
 	return &table{
 		schema: schema,
 		rows:   map[string]*row{},

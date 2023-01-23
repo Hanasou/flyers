@@ -22,8 +22,9 @@ func NewHelloFromUtils() {
 }
 
 // GenericErrorHandle will simply panic on errors
-func PanicErrorHandle(err error) {
+func PanicErrorHandle(err error, message string) {
 	if err != nil {
+		log.Println(message)
 		log.Panicln(err)
 	}
 }
@@ -37,7 +38,7 @@ func GenerateNumber(min int, max int) int {
 func GenerateId(length int) string {
 	b := make([]byte, length)
 	_, err := rand.Read(b)
-	PanicErrorHandle(err)
+	PanicErrorHandle(err, "Error generating random ID")
 
 	return hex.EncodeToString(b)
 }

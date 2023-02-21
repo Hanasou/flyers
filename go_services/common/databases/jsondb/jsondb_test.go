@@ -8,10 +8,6 @@ import (
 	"github.com/Hanasou/flyers/go_services/common/databases/jsondb"
 )
 
-func TestJsonUnmarshal(t *testing.T) {
-	jsondb.GenerateSampleTodos()
-}
-
 func TestGenerateTestData(t *testing.T) {
 	jsondb.GenerateSampleData("todo", 10)
 	jsondb.GenerateSampleData("user", 10)

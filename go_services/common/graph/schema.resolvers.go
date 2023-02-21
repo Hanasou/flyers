@@ -6,8 +6,11 @@ package graph
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"log"
 
+	"github.com/Hanasou/flyers/go_services/common/databases"
 	"github.com/Hanasou/flyers/go_services/common/graph/model"
 )
 
@@ -18,14 +21,40 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
+	byteContents, err := r.Driver.GetAll("todo")
+	if err != nil {
+		log.Println("CreateTodo unable to get results")
+		return nil, err
+	}
+
+	results := &[]*model.Todo{}
+	err = json.Unmarshal(byteContents, results)
+	if err != nil {
+		log.Println("CreateTodo failed to unmarshal byte data into results")
+		return nil, err
+	}
+
+	return *results, nil
 }
 
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
 // Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+func (r *Resolver) Query() QueryResolver {
+	driver, err := databases.NewDriver("json")
+	if err != nil {
+		log.Println("QueryResolver failed to initialize database driver")
+		return nil
+	}
+	return &queryResolver{
+		r,
+		driver,
+	}
+}
 
 type mutationResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }
+type queryResolver struct {
+	*Resolver
+	databases.Driver
+}

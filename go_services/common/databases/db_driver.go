@@ -7,7 +7,7 @@ import (
 )
 
 type Driver interface {
-	GetAll(table string) ([]map[string]interface{}, error)
+	GetAll(table string) ([]byte, error)
 }
 
 func NewDriver(driverType string) (Driver, error) {

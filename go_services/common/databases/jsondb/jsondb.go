@@ -18,10 +18,10 @@ type JsonDb struct {
 }
 
 const (
-	basePath = "./tables/"
+	basePath = "/home/rzhang/git_repos/flyers/go_services/common/databases/jsondb/tables/"
 )
 
-func (db *JsonDb) GetAll(table string) ([]map[string]interface{}, error) {
+func (db *JsonDb) GetAll(table string) ([]byte, error) {
 	// Get all will retrieve generic elements from the file, or "table" you provide
 	fullPath := basePath + table + ".json"
 	byteContents, err := utils.OpenFile(fullPath)
@@ -29,14 +29,18 @@ func (db *JsonDb) GetAll(table string) ([]map[string]interface{}, error) {
 		log.Println("JsonDb could not open file under listed path: " + fullPath)
 		return nil, err
 	}
-	objects := []map[string]interface{}{}
-	err = json.Unmarshal(byteContents, &objects)
-	if err != nil {
-		log.Println("JsonDb could not unmarshal data successfully into slice of maps")
-		return nil, err
-	}
 
-	return objects, nil
+	return byteContents, nil
+	/*
+		objects := []map[string]interface{}{}
+		err = json.Unmarshal(byteContents, &objects)
+		if err != nil {
+			log.Println("JsonDb could not unmarshal data successfully into slice of maps")
+			return nil, err
+		}
+
+		return objects, nil
+	*/
 }
 
 func GenerateSampleData(objectType string, amount int) error {
@@ -68,6 +72,28 @@ func GenerateSampleData(objectType string, amount int) error {
 		}
 	}
 
+	// Marshal this data into json bytes
+	jsonBytes, err := json.Marshal(data)
+	if err != nil {
+		log.Println(methodName + " failed to marshal todos into Json bytes")
+		return err
+	}
+
+	// Create file
+	fullPath := basePath + objectType + ".json"
+	file, err := os.Create(fullPath)
+	if err != nil {
+		log.Println(methodName + " failed to create file")
+		return err
+	}
+	defer file.Close()
+
+	// Write to file
+	_, err = file.Write(jsonBytes)
+	if err != nil {
+		log.Println(methodName + " generateSampleTodos failed to write Json bytes to file")
+		return err
+	}
 	return nil
 }
 

@@ -11,6 +11,7 @@ func OpenFile(path string) ([]byte, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Println("Cannot open file")
+		log.Println(err)
 		return nil, err
 	}
 	defer file.Close()

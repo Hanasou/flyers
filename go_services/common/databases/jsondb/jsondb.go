@@ -31,16 +31,10 @@ func (db *JsonDb) GetAll(table string) ([]byte, error) {
 	}
 
 	return byteContents, nil
-	/*
-		objects := []map[string]interface{}{}
-		err = json.Unmarshal(byteContents, &objects)
-		if err != nil {
-			log.Println("JsonDb could not unmarshal data successfully into slice of maps")
-			return nil, err
-		}
+}
 
-		return objects, nil
-	*/
+func (db *JsonDb) AddElement(table string) error {
+	return nil
 }
 
 func GenerateSampleData(objectType string, amount int) error {

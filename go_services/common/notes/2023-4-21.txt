@@ -1,0 +1,11 @@
+Triage
+It's been a while since I worked on this, so I'll just go over and triage what I have in this so far
+
+Okay, I'm just going to deprecate this entire thing. Everything that I'm interested in migrating over to my gateway service include:
+- graphql stuff
+- grpc stuff
+- utility functions
+- shutdown hook
+
+I don't think I actually care enough to look over all of this and migrate it, might as well just start from scratch.
+Hopefully this will be easier since I already did this stuff prior.
